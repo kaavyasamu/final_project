@@ -83,7 +83,7 @@ def get_yelp(terms, location, num_results):
     yelp_param = {'term': terms, 'location': location, 'limit':num_results, 'sort_by': 'review_count'}
     yelp_req = requests.get(yelp_url, params=yelp_param, headers=yelp_headers).json()
     yelp_cache_url = requests.get(yelp_url,params=yelp_param, headers=yelp_headers).url
-    yelp_cache = make_url_request_using_cache(yelp_cache_url, params=yelp_param,headers=yelp_headers, cache=CACHE_DICT)
+    yelp_cache = make_url_request_using_cache(yelp_cache_url,params=yelp_param, headers=yelp_headers, cache=CACHE_DICT)
     return yelp_req
 
 def get_zomato(terms, location):
@@ -318,19 +318,17 @@ if __name__ == "__main__":
                 i+=1
                 places.append(item_info)
             
-            # print("-------------------------------")
-            # print(f"YELP'S {cuisine} RESTAURANTS IN {city}:")
-            # print("-------------------------------")
-            # for info in places:
-            #     print(info)   
+            print("-------------------------------")
+            print(f"YELP'S {cuisine} RESTAURANTS IN {city}:")
+            print("-------------------------------")
+            for info in places:
+                print(info)   
             
             
             zomato = []
             call_zomato = get_zomato(terms=cuisine, location=city)
             top_cuisines =  call_zomato['top_cuisines']
-            print(top_cuisines)
             num_rest = call_zomato['num_restaurant']
-            print(num_rest)
             print("\n-------------------------------")
             print(f"ZOMATO'S BEST RESTAURANTS IN {city}:")
             print(f"there are {num_rest} restaurants in {city}")
