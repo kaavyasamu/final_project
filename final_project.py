@@ -82,8 +82,7 @@ def get_yelp(terms, location, num_results):
     yelp_headers = {'Authorization': 'Bearer %s' % YELP_KEY}
     yelp_param = {'term': terms, 'location': location, 'limit':num_results, 'sort_by': 'review_count'}
     yelp_req = requests.get(yelp_url, params=yelp_param, headers=yelp_headers).json()
-    yelp_cache_url = requests.get(yelp_url,params=yelp_param, headers=yelp_headers).url
-    yelp_cache = make_url_request_using_cache(yelp_cache_url,params=yelp_param, headers=yelp_headers, cache=CACHE_DICT)
+    yelp_cache = make_url_request_using_cache(yelp_url,params=yelp_param, headers=yelp_headers, cache=CACHE_DICT)
     return yelp_req
 
 def get_zomato(terms, location):
@@ -234,7 +233,7 @@ def scatter_2(graph_price, graph_ratings, graph_names):
 
 def bar_1(rating_amt, count_rating):
     fig = go.Figure(data=[go.Pie(labels= rating_amt, values=count_rating, hole=.3)])
-    fig.update_layout(title={'text':'Comparison of Restaurants by Average Price','y':0.9, 
+    fig.update_layout(title={'text':'Comparison of Restaurants by Average Rating','y':0.9, 
     'x':0.5, 'xanchor': 'center', 'yanchor': 'top'})
     fig.show()
 
@@ -413,9 +412,6 @@ if __name__ == "__main__":
                     scatter_2(graph_price, graph_ratings, graph_names)
                 if show_vis == 4:
                     bar_1(rating_amt, count_rating)
-                else:
-                    print("Sorry, invalid input.")  
-
             create_db()
             load_yelp(locations)
             load_zomato(call_zomato)
